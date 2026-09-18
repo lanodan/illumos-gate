@@ -571,8 +571,7 @@ extern void yield(void);
 #endif /* !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) */
 
 #if !defined(__XOPEN_OR_POSIX) || defined(_ATFILE_SOURCE) || \
-	defined(__EXTENSIONS__)
-	/* || defined(_XPG7) */
+	defined(__EXTENSIONS__) || defined(_XPG7)
 extern int faccessat(int, const char *, int, int);
 extern int fchownat(int, const char *, uid_t, gid_t, int);
 extern int linkat(int, const char *, int, const char *, int);

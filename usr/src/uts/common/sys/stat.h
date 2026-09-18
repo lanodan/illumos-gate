@@ -38,24 +38,7 @@
 extern "C" {
 #endif
 
-/*
- * The implementation specific header <sys/time_impl.h> includes a
- * definition for timestruc_t needed by the stat structure.  However,
- * including either <time.h>, which includes <sys/time_impl.h>, or
- * including <sys/time_impl.h> directly will break both X/Open and
- * POSIX namespace. Preceeding tag, structure, and structure member
- * names with underscores eliminates the namespace breakage and at the
- * same time, with unique type names, eliminates the possibility of
- * timespec_t or timestruct_t naming conflicts that could otherwise
- * result based on the order of inclusion of <sys/stat.h> and
- * <sys/time.h>.  The header <sys/time_std_impl.h> contains the
- * standards namespace safe versions of these definitions.
- */
-#if !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__)
 #include <sys/time_impl.h>
-#else
-#include <sys/time_std_impl.h>
-#endif /* !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) */
 
 #define	_ST_FSTYPSZ 16		/* array size for file system type name */
 
@@ -159,7 +142,7 @@ struct  stat64 {
 #ifdef	__PRAGMA_REDEFINE_EXTNAME
 #pragma redefine_extname	fstat	fstat64
 #pragma redefine_extname	stat	stat64
-#if !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) || \
+#if !defined(__XOPEN_OR_POSIX) || defined(_XPG7) || defined(__EXTENSIONS__) || \
 	defined(_ATFILE_SOURCE)
 #pragma	redefine_extname	fstatat	fstatat64
 #endif /* defined (_ATFILE_SOURCE) */
@@ -170,7 +153,7 @@ struct  stat64 {
 #else	/* __PRAGMA_REDEFINE_EXTNAME */
 #define	fstat	fstat64
 #define	stat	stat64
-#if !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) || \
+#if !defined(__XOPEN_OR_POSIX) || defined(_XPG7) || defined(__EXTENSIONS__) || \
 	defined(_ATFILE_SOURCE)
 #define	fstatat	fstatat64
 #endif /* defined (_ATFILE_SOURCE) */
@@ -188,7 +171,7 @@ struct  stat64 {
 #ifdef	__PRAGMA_REDEFINE_EXTNAME
 #pragma	redefine_extname	fstat64	fstat
 #pragma	redefine_extname	stat64	stat
-#if !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) || \
+#if !defined(__XOPEN_OR_POSIX) || defined(_XPG7) || defined(__EXTENSIONS__) || \
 	defined(_ATFILE_SOURCE)
 #pragma	redefine_extname	fstatat64 fstatat
 #endif /* defined (_ATFILE_SOURCE) */
@@ -198,7 +181,7 @@ struct  stat64 {
 #else	/* __PRAGMA_REDEFINE_EXTNAME */
 #define	fstat64	fstat
 #define	stat64	stat
-#if !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) || \
+#if !defined(__XOPEN_OR_POSIX) || defined(_XPG7) || defined(__EXTENSIONS__) || \
 	defined(_ATFILE_SOURCE)
 #define	fstatat64	fstatat
 #endif /* defined (_ATFILE_SOURCE) */
@@ -228,9 +211,9 @@ struct stat {
 	timestruc_t	st_mtim;
 	timestruc_t	st_ctim;
 #else
-	_timestruc_t	st_atim;
-	_timestruc_t	st_mtim;
-	_timestruc_t	st_ctim;
+	struct timespec	st_atim;
+	struct timespec	st_mtim;
+	struct timespec	st_ctim;
 #endif
 	blksize_t	st_blksize;
 	blkcnt_t	st_blocks;
@@ -258,9 +241,9 @@ struct	stat {
 	timestruc_t	st_mtim;
 	timestruc_t	st_ctim;
 #else
-	_timestruc_t	st_atim;
-	_timestruc_t	st_mtim;
-	_timestruc_t	st_ctim;
+	struct timespec	st_atim;
+	struct timespec	st_mtim;
+	struct timespec	st_ctim;
 #endif
 	blksize_t	st_blksize;
 	blkcnt_t	st_blocks;
@@ -289,9 +272,9 @@ struct stat64 {
 	timestruc_t	st_mtim;
 	timestruc_t	st_ctim;
 #else
-	_timestruc_t	st_atim;
-	_timestruc_t	st_mtim;
-	_timestruc_t	st_ctim;
+	struct timespec	st_atim;
+	struct timespec	st_mtim;
+	struct timespec	st_ctim;
 #endif
 	blksize_t	st_blksize;
 	blkcnt_t	st_blocks;
@@ -316,9 +299,9 @@ struct	stat64 {
 	timestruc_t	st_mtim;
 	timestruc_t	st_ctim;
 #else
-	_timestruc_t    st_atim;
-	_timestruc_t    st_mtim;
-	_timestruc_t    st_ctim;
+	struct timespec    st_atim;
+	struct timespec    st_mtim;
+	struct timespec    st_ctim;
 #endif
 	blksize_t	st_blksize;
 	blkcnt64_t	st_blocks;
@@ -472,8 +455,8 @@ struct stat64_32 {
 #endif	/* __i386 || (__i386_COMPAT && _KERNEL) */
 
 #if defined(__EXTENSIONS__) || \
-	(!defined(_STRICT_STDC) && !defined(__XOPEN_OR_POSIX))
-	/* || defined(_XPG7) */
+	(!defined(_STRICT_STDC) && !defined(__XOPEN_OR_POSIX)) \
+	|| defined(_XPG7)
 /* for use with futimens() and utimensat() */
 #define	UTIME_NOW	-1L
 #define	UTIME_OMIT	-2L
@@ -497,15 +480,15 @@ extern mode_t umask(mode_t);
 extern int fstat64(int, struct stat64 *);
 extern int stat64(const char *_RESTRICT_KYWD, struct stat64 *_RESTRICT_KYWD);
 extern int lstat64(const char *_RESTRICT_KYWD, struct stat64 *_RESTRICT_KYWD);
-#if !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) || \
+#if !defined(__XOPEN_OR_POSIX) || defined(_XPG7) || defined(__EXTENSIONS__) || \
 	defined(_ATFILE_SOURCE)
 extern int fstatat64(int, const char *, struct stat64 *, int);
 #endif /* defined (_ATFILE_SOURCE) */
 #endif
 
 #if defined(__EXTENSIONS__) || defined(_ATFILE_SOURCE) || \
-	(!defined(_STRICT_STDC) && !defined(__XOPEN_OR_POSIX))
-	/* || defined(_XPG7) */
+	(!defined(_STRICT_STDC) && !defined(__XOPEN_OR_POSIX)) \
+	|| defined(_XPG7)
 extern int mkdirat(int, const char *, mode_t);
 extern int mkfifoat(int, const char *, mode_t);
 extern int mknodat(int, const char *, mode_t, dev_t);

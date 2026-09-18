@@ -46,7 +46,7 @@ extern int fstat(int, struct stat *);
 extern int stat(const char *_RESTRICT_KYWD, struct stat *_RESTRICT_KYWD);
 
 #if !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) || \
-	defined(_ATFILE_SOURCE)
+	defined(_ATFILE_SOURCE) || defined(_XPG7)
 extern int fstatat(int, const char *, struct stat *, int);
 #endif	/* defined (_ATFILE_SOURCE) */
 
@@ -61,7 +61,7 @@ extern int fstat();
 extern int stat();
 
 #if !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) || \
-	defined(_ATFILE_SOURCE)
+	defined(_ATFILE_SOURCE) || defined(_XPG7)
 extern int fstatat();
 #endif
 

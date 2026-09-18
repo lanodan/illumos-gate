@@ -392,8 +392,7 @@ typedef struct fshare {
  * Special flags for functions such as openat(), fstatat()....
  */
 #if !defined(__XOPEN_OR_POSIX) || defined(_ATFILE_SOURCE) || \
-	defined(__EXTENSIONS__)
-	/* || defined(_XPG7) */
+	defined(_XPG7) || defined(__EXTENSIONS__)
 #define	AT_FDCWD			0xffd19553
 #define	AT_SYMLINK_NOFOLLOW		0x1000
 #define	AT_SYMLINK_FOLLOW		0x2000	/* only for linkat() */

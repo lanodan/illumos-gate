@@ -97,7 +97,7 @@ typedef struct {
 
 extern DIR		*opendir(const char *);
 #if defined(__EXTENSIONS__) || !defined(__XOPEN_OR_POSIX) || \
-	defined(_ATFILE_SOURCE)
+	defined(_ATFILE_SOURCE) || defined(_XPG7)
 extern DIR		*fdopendir(int);
 extern int		dirfd(DIR *);
 #endif /* defined(__EXTENSIONS__) || !defined(__XOPEN_OR_POSIX) ... */
