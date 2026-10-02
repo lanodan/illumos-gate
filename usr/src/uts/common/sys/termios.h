@@ -93,6 +93,20 @@ struct termios {
 	cc_t		c_cc[NCCS];	/* control chars */
 };
 
+#ifndef _SYS_TTOLD_H
+
+#if !defined(_STRICT_POSIX) || defined(_XPG8)
+/* Windowing structure to support JWINSIZE/TIOCSWINSZ/TIOCGWINSZ */
+struct winsize {
+	unsigned short ws_row;	/* rows, in characters */
+	unsigned short ws_col;	/* columns, in character */
+	unsigned short ws_xpixel;	/* horizontal size, pixels */
+	unsigned short ws_ypixel;	/* vertical size, pixels */
+};
+#endif /* !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) */
+
+#endif /* end _SYS_TTOLD_H */
+
 /*
  * POSIX termios functions
  * These functions get mapped into ioctls.
@@ -117,7 +131,14 @@ extern pid_t tcgetsid(int);
 
 #endif /* !defined(__XOPEN_OR_POSIX) || defined(_XPG4_2) ... */
 
-#endif
+#if !defined(_STRICT_POSIX) || defined(_XPG8)
+
+extern int tcgetwinsize(int, const struct winsize *);
+extern int tcsetwinsize(int, const struct winsize *);
+
+#endif /* !defined(_STRICT_POSIX) || defined(_XPG8) */
+
+#endif /* _KERNEL */
 
 /* control characters */
 #define	VINTR	0
@@ -554,20 +575,6 @@ struct ppsclockev32 {
 #define	B3000000	29
 #define	B3500000	30
 #define	B4000000	31
-
-#ifndef _SYS_TTOLD_H
-
-#if !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__)
-/* Windowing structure to support JWINSIZE/TIOCSWINSZ/TIOCGWINSZ */
-struct winsize {
-	unsigned short ws_row;	/* rows, in characters */
-	unsigned short ws_col;	/* columns, in character */
-	unsigned short ws_xpixel;	/* horizontal size, pixels */
-	unsigned short ws_ypixel;	/* vertical size, pixels */
-};
-#endif /* !defined(__XOPEN_OR_POSIX) || defined(__EXTENSIONS__) */
-
-#endif /* end _SYS_TTOLD_H */
 
 #ifdef	__cplusplus
 }

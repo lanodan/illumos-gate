@@ -689,7 +689,8 @@ l l .
 \fBtcflush\fR	\fBtcgetattr\fR
 \fBtcgetpgrp\fR	\fBtcgetsid\fR
 \fBtcsendbreak\fR	\fBtcsetattr\fR
-\fBtcsetpgrp\fR	\fBtdelete\fR
+\fBtcsetpgrp\fR	\fBtcgetwinsize\fR
+\fBtcsetwinsize\fR	\fBtdelete\fR
 \fBtell\fR	\fBtelldir\fR
 \fBtempnam\fR	\fBtextdomain\fR
 \fBtfind\fR	\fBthr_continue\fR

@@ -582,9 +582,11 @@ PORTGEN=			\
 	tcgetattr.o		\
 	tcgetpgrp.o		\
 	tcgetsid.o		\
+	tcgetwinsize.o		\
 	tcsendbreak.o		\
 	tcsetattr.o		\
 	tcsetpgrp.o		\
+	tcsetwinsize.o		\
 	tell.o			\
 	telldir.o		\
 	tfind.o			\

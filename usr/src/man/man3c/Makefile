@@ -493,6 +493,7 @@ MANFILES=	__fbufsize.3c					\
 		tcgetattr.3c					\
 		tcgetpgrp.3c					\
 		tcgetsid.3c					\
+		tcgetwinsize.3c					\
 		tcsendbreak.3c					\
 		tcsetattr.3c					\
 		tcsetpgrp.3c					\

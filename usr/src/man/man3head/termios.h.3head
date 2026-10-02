@@ -978,7 +978,9 @@ Interface Stability	Standard
 .BR tcflush (3C),
 .BR tcgetattr (3C),
 .BR tcgetsid (3C),
+.BR tcgetwinsize (3C),
 .BR tcsendbreak (3C),
 .BR tcsetattr (3C),
+.BR tcsetwinsize (3C),
 .BR attributes (7),
 .BR standards (7)

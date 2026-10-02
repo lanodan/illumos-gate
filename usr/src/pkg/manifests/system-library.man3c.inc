@@ -1453,9 +1453,11 @@ file path=usr/share/man/man3c/tcflush.3c
 file path=usr/share/man/man3c/tcgetattr.3c
 file path=usr/share/man/man3c/tcgetpgrp.3c
 file path=usr/share/man/man3c/tcgetsid.3c
+file path=usr/share/man/man3c/tcgetwinsize.3c
 file path=usr/share/man/man3c/tcsendbreak.3c
 file path=usr/share/man/man3c/tcsetattr.3c
 file path=usr/share/man/man3c/tcsetpgrp.3c
+file path=usr/share/man/man3c/tcsetwinsize.3c target=tcgetwinsize.3c
 link path=usr/share/man/man3c/tdelete.3c target=tsearch.3c
 file path=usr/share/man/man3c/tell.3c
 file path=usr/share/man/man3c/telldir.3c

@@ -3145,12 +3145,14 @@ $endif
 	_tcgetpgrp;
 	tcgetsid;
 	_tcgetsid;
+	tcgetwinsize;
 	tcsendbreak;
 	_tcsendbreak;
 	tcsetattr;
 	_tcsetattr;
 	tcsetpgrp;
 	_tcsetpgrp;
+	tcsetwinsize;
 	tdelete;
 	_tdelete;
 	tell;
