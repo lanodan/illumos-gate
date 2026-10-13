@@ -121,7 +121,7 @@ c | c
 l | l .
 ATTRIBUTE TYPE	ATTRIBUTE VALUE
 _
-Interface Stability	Committed
+Interface Stability	Standard
 _
 MT-Level	MT-Safe
 .TE
@@ -133,4 +133,5 @@ MT-Level	MT-Safe
 .BR free (3C),
 .BR malloc (3C),
 .BR realloc (3C),
-.BR attributes (7)
+.BR attributes (7),
+.BR standards (7)
